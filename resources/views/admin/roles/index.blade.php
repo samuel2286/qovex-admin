@@ -3,7 +3,9 @@
 <x-assets.datatables />
 
 @section('breadcrumb')
+@can('create-role')
 <x-buttons.primary :text="'create role'" :link="route('roles.create')"  />
+@endcan
 @endsection
 
 @section('content')
@@ -11,7 +13,7 @@
     <div class="card">
         <div class="card-body">
 
-            <h4 class="card-title">User Permission List</h4>
+            <h4 class="card-title">User Roles List</h4>
 
             <table id="datatable" class="table table-bordered dt-responsive nowrap"
                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -29,11 +31,14 @@
                         <td>{{$role->name}}</td>
                         <td>
                             @foreach ($role->getAllPermissions() as $permission)
-                                <span class="pill">{{ $permission->name }}</span>
+                                <span class="badge badge-primary">{{ $permission->name }}</span>
                             @endforeach
                         </td>
                         <td class="text-center">
+                            @can('edit-role')
                             <a href="{{route('roles.edit',$role->id)}}" class="edit"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>
+                            @endcan 
+                            @can('destroy-role')
                             <a href="#" class="float-right">
                                 <form action="{{route('roles.destroy',$role->id)}}" method="post">
                                     @csrf
@@ -41,6 +46,7 @@
                                     <button onclick="" type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                 </form>
                             </a>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach

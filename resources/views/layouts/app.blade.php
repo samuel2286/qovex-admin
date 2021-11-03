@@ -3,16 +3,20 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ucwords(config('app.name'))}} - {{ucwords($title ?? '')}}</title>
+    <title>{{ucwords(!empty(AppSettings::get('app_name')) ? AppSettings::get('app_name'): config('app.name'))}} - {{ucwords($title ?? '')}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{!empty(AppSettings::get('logo')) ? asset('storage/'.AppSettings::get('logo')): asset('assets/images/favicon.ico')}}">
     <!-- csrf token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Page Css -->
     @stack('page-css')
     <!-- Bootstrap Css -->
+    @if (ucfirst(AppSettings::get('mode')) == 'Dark')
+    <link href="{{asset('assets/css/bootstrap-dark.min.css')}}" id="bootstrap-style-dark" rel="stylesheet" type="text/css" />
+    @else
     <link href="{{asset('assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    @endif
     <!-- Icons Css -->
     <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- Toastr Css-->
@@ -20,11 +24,29 @@
     <!-- Sweet Alert-->
     <link href="{{asset('assets/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
+    @if (AppSettings::get('rtl') == '1')
+    <link href="{{asset('assets/css/app-rtl.min.css')}}" id="app-style-rtl" rel="stylesheet" type="text/css" />
+    @endif
+    @if(ucfirst(AppSettings::get('mode')) == 'Dark')
+    <link href="{{asset('assets/css/app-dark.min.css')}}" id="app-style-dark" rel="stylesheet" type="text/css" />
+    @else
     <link href="{{asset('assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-
+    @endif
 </head>
-
+@if (AppSettings::get('layout') == 'detached')  
 <body data-layout="detached" data-topbar="colored">
+@endif
+@if (AppSettings::get('layout') == 'icon')  
+<body data-layout="detached" data-topbar="colored" data-keep-enlarged="true" class="vertical-collpsed">
+@endif
+@if (AppSettings::get('layout') == 'boxed')  
+<body data-layout="detached" data-topbar="colored" data-keep-enlarged="true" class="vertical-collpsed" data-layout-size="boxed">
+@endif
+@if (AppSettings::get('layout') == 'compact')  
+<body data-layout="detached" data-topbar="colored" data-sidebar-size="small">
+@endif
+
+    <x-preloader.spinner-chase />
 
     <div class="container-fluid">
         <!-- Begin page -->
@@ -169,7 +191,10 @@
             case 'error':
                 toastr.error("{{ Session::get('message') }}");
                 break;
-
+            
+            case 'danger':
+                toastr.error("{{ Session::get('message') }}");
+                break;
             
         }
         @endif

@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ucwords(config('app.name'))}} - {{ucwords($title ?? '')}}</title>
+    <title>{{ucwords(!empty(AppSettings::get('app_name')) ? AppSettings::get('app_name'): config('app.name'))}} - {{ucwords($title ?? '')}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}">
+    <link rel="shortcut icon" href="{{!empty(AppSettings::get('logo')) ? asset('storage/'.AppSettings::get('logo')): asset('assets/images/favicon.ico')}}">
     <!-- Bootstrap Css -->
     <link href="{{asset('assets/css/bootstrap.min.css')}}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -17,6 +17,7 @@
 </head>
 
 <body>
+    <x-preloader.spinner-chase />
     <div class="home-btn d-none d-sm-block">
         <a href="{{route('dashboard')}}" class="text-dark"><i class="fas fa-home h2"></i></a>
     </div>

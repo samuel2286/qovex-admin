@@ -129,6 +129,7 @@
                     </div>
                 </div>
 
+                <!-- user profile -->
                 <div class="dropdown d-inline-block">
                     <button type="button" class="btn header-item waves-effect"
                         id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true"
@@ -141,12 +142,9 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <!-- item-->
                         <a class="dropdown-item" href="{{route('profile')}}"><i class="bx bx-user font-size-16 align-middle mr-1"></i> Profile</a>
-
-                        <a class="dropdown-item d-block" href="#"><span
-                                class="badge badge-success float-right">11</span><i
-                                class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
-                        <a class="dropdown-item" href="{{route('lockscreen')}}"><i
-                                class="bx bx-lock-open font-size-16 align-middle mr-1"></i> Lock screen</a>
+                        @can('view-settings')
+                        <a class="dropdown-item d-block" href="{{route('settings')}}"><i class="bx bx-wrench font-size-16 align-middle mr-1"></i> Settings</a>
+                        @endcan
                         <div class="dropdown-item text-danger">
                             <form action="{{route('logout')}}" method="post">
                             @csrf
@@ -156,32 +154,34 @@
                         
                     </div>
                 </div>
-
+                @can('view-settings')
                 <div class="dropdown d-inline-block">
-                    <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
-                        <i class="mdi mdi-settings-outline"></i>
-                    </button>
+                    <a href="{{route('settings')}}">
+                        <button type="button" class="btn header-item noti-icon  waves-effect">
+                            <i class="mdi mdi-settings-outline"></i>
+                        </button>
+                    </a>
                 </div>
-
+                @endcan
             </div>
             <div>
                 <!-- LOGO -->
                 <div class="navbar-brand-box">
                     <a href="" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="{{asset('assets/images/logo-sm.png')}}" alt="" height="20">
+                            <img src="{{!empty(AppSettings::get('logo')) ? asset('storage/'.AppSettings::get('logo')): asset('assets/images/logo-sm.png')}}" alt="" height="20">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="17">
+                            <img src="{{!empty(AppSettings::get('logo')) ? asset('storage/'.AppSettings::get('logo')): asset('assets/images/logo-dark.png')}}" alt="" height="17">
                         </span>
                     </a>
 
                     <a href="" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{asset('assets/images/logo-sm.png')}}" alt="" height="20">
+                            <img src="{{!empty(AppSettings::get('logo')) ? asset('storage/'.AppSettings::get('logo')): asset('assets/images/logo-sm.png')}}" alt="" height="20">
                         </span>
                         <span class="logo-lg">
-                            <img src="{{asset('assets/images/logo-light.png')}}" alt="" height="19">
+                            <img src="{{!empty(AppSettings::get('logo')) ? asset('storage/'.AppSettings::get('logo')): asset('assets/images/logo-light.png')}}" alt="" height="19">
                         </span>
                     </a>
                 </div>
@@ -191,7 +191,6 @@
                     id="vertical-menu-btn">
                     <i class="fa fa-fw fa-bars"></i>
                 </button>
-
                 <!-- App Search-->
                 <form class="app-search d-none d-lg-inline-block">
                     <div class="position-relative">

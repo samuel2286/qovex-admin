@@ -43,5 +43,16 @@
             </a>
         </li>
         @endcan
+        <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <i class="mdi mdi-settings-outline"></i>
+                <span>Settings</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="false">
+               @can('view-settings')
+                <li><a href="{{route('settings')}}">General Setting</a></li>
+               @endcan
+            </ul>
+        
     </ul>
 </div>

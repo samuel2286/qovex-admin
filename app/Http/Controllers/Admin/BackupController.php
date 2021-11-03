@@ -39,7 +39,7 @@ class BackupController extends Controller
                 }
             }
         }
-        return view('admin.backups',$this->data,compact(
+        return view('admin.backups.index',$this->data,compact(
             'title',
         ));
     }

@@ -25,11 +25,21 @@ class UserController extends Controller
             return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('avatar',function($user){
-                        return '<img src="'.asset('storage/users/'.$user->avatar).'" class="rounded-circle avatar-md" />';
+                        $src = asset('assets/images/users/avatar-3.jpg');
+                        if(!empty($user->avatar)){
+                            $src = asset('storage/users/'.$user->avatar);
+                        }
+                        return '<img src="'.$src.'" class="rounded-circle avatar-md" />';
                     })
                     ->addColumn('action',function ($user){
-                        $editbtn = '<a href="'.route('user.edit',$user->id).'" class="edit"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                        $deletebtn = '<a data-id="'.$user->id.'" data-route="'.route('user.destroy').'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                        $editbtn = '<a href="'.route('users.edit',$user->id).'" class="edit"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
+                        $deletebtn = '<a data-id="'.$user->id.'" data-route="'.route('users.destroy',$user->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                        if(!auth()->user()->hasPermissionTo('edit-user')){
+                            $editbtn = '';
+                        }
+                        if(!auth()->user()->hasPermissionTo('destroy-user')){
+                            $deletebtn = '';
+                        }
                         $btn = $editbtn.' '.$deletebtn;
                         return $btn;
                     })
@@ -136,6 +146,9 @@ class UserController extends Controller
             'avatar' => $imageName,
             'password' => $password,
         ]);
+        foreach($user->getRoleNames() as $userRole){
+            $user->removeRole($userRole);
+        }
         $user->assignRole($request->role);
         $notification = notify('user updated successfully');
         return redirect()->route('users.index')->with($notification);

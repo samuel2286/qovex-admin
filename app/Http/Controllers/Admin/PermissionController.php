@@ -24,6 +24,12 @@ class PermissionController extends Controller
                     ->addColumn('action',function ($row){
                         $editbtn = '<a data-id="'.$row->id.'" data-name="'.$row->name.'" href="javascript:void(0)" class="edit"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
                         $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('permission.destroy').'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
+                        if(!auth()->user()->hasPermissionTo('edit-permission')){
+                            $editbtn = '';
+                        }
+                        if(!auth()->user()->hasPermissionTo('destroy-permission')){
+                            $deletebtn = '';
+                        }
                         $btn = $editbtn.' '.$deletebtn;
                         return $btn;
                     })
@@ -31,7 +37,7 @@ class PermissionController extends Controller
                     ->make(true);
         }
         
-        return view('admin.permissions.index',compact(
+        return view('admin.roles.permissions',compact(
             'title',
         ));
     }
@@ -52,7 +58,8 @@ class PermissionController extends Controller
             $permission = Permission::create(['name' => $permission]);
             $permission->assignRole('super-admin');
         }
-        return back()->with(notify("permission created"));
+        $notification = notify("permission created");
+        return back()->with($notification);
     }
 
     
@@ -72,7 +79,8 @@ class PermissionController extends Controller
         $permission->update([
             'name' => $request->permission,
         ]);
-        return back()->with(notify('permission updated'));
+        $notification = notify('permission updated');
+        return back()->with($notification);
     }
 
     /**

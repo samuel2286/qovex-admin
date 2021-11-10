@@ -46,7 +46,7 @@
                     </div>
                     <div class="mt-5 text-center">
                         @stack('form-footer')
-                        <p>Copyright &copy; 2020 {{ucwords(config('app.name'))}}. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                        <p>Copyright &copy; <script>document.write(new Date().getFullYear())</script> {{ucwords(config('app.name'))}}. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
                     </div>
 
                 </div>

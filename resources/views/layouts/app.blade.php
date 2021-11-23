@@ -52,7 +52,7 @@
         <!-- Begin page -->
         <div id="layout-wrapper">
 
-            @include('includes.header')
+            @include('includes.admin.header')
 
             <!-- ========== Left Sidebar Start ========== -->
             <div class="vertical-menu">
@@ -75,7 +75,7 @@
                     </div>
 
                     <!--- Sidemenu -->
-                    @include('includes.sidebar')
+                    @include('includes.admin.sidebar')
                     <!-- Sidebar -->
                 </div>
             </div>
@@ -148,9 +148,6 @@
     </div>
     <!-- end container-fluid -->
 
-    <!-- Right Sidebar -->
-    {{-- @include('includes.rightside') --}}
-    <!-- /Right-bar -->
 
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>

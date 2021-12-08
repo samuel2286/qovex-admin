@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Forms\UserForm;
 use App\Models\User;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\If_;
@@ -9,12 +10,13 @@ use Yajra\DataTables\DataTables;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     *@param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -53,15 +55,18 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     *@param   \Kris\LaravelFormBuilder\FormBuilder $formBuilder
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
         $title = 'create user';
-        $roles = Role::get();
+        $form = $formBuilder->create('App\Forms\UserForm', [
+            'method' => 'POST',
+            'url' => route('users.store'),
+        ]);
         return view('admin.users.create',compact(
-            'title','roles'
+            'title','form'
         ));
     }
 
@@ -69,17 +74,14 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param   \Kris\LaravelFormBuilder\FormBuilder $formBuilder
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,FormBuilder $formBuilder)
     {
-        $this->validate($request,[
-            'name' => 'required|min:5|max:200',
-            'email' => 'required|email',
-            'username' => 'required|min:3|max:200',
-            'password' => 'required|min:3|max:255|confirmed',
-            'avatar' => 'nullable|file|image|mimes:jpg,jpeg,png,gif'
-        ]);
+        $form = $formBuilder->create(UserForm::class);
+        $form->redirectIfNotValid();   
+
         $imageName = null;
         if($request->hasFile('avatar')){
             $imageName = time().'.'.$request->avatar->extension();
@@ -101,16 +103,20 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  model $user
+     *@param   \Kris\LaravelFormBuilder\FormBuilder $formBuilder
+     * @param  \app\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(FormBuilder $formBuilder,User $user)
     {
         $title = 'edit user';
-        $roles = Role::get();
+        $form = $formBuilder->create('App\Forms\UserForm', [
+            'method' => 'PUT',
+            'url' => route('users.update',$user),
+            'model' => $user,
+        ]);
         return view('admin.users.edit',compact(
-            'title','user','roles'
+            'title','form'
         ));
     }
 
@@ -118,25 +124,22 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  model $user
+     * @param  \app\Models\User $user
+     * @param   \Kris\LaravelFormBuilder\FormBuilder $formBuilder
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user,FormBuilder $formBuilder)
     {
-        $this->validate($request,[
-            'name' => 'required|min:5|max:200',
-            'email' => 'required|email',
-            'username' => 'nullable|min:3|max:200',
-            'password' => 'nullable|min:3|max:255|confirmed',
-            'avatar' => 'nullable|file|image|mimes:jpg,jpeg,png,gif'
-        ]);
+        $form = $formBuilder->create(UserForm::class);
+        $form->redirectIfNotValid();
+
         $imageName = $user->avatar;
         $password = $user->password;
         if($request->hasFile('avatar')){
             $imageName = time().'.'.$request->avatar->extension();
             $request->avatar->move(public_path('storage/users'), $imageName);
         }
-        if(!empty($request->password)){
+        if(!empty($request->password) && ($user->password != $request->password)){
             $password = Hash::make($request->password);
         }
         $user->update([
@@ -211,7 +214,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)

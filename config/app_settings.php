@@ -81,8 +81,8 @@ return [
                     'class' => 'form-control',
                     // optional fields
                     'options' => [
-                        '1' => 'Yes',
-                        '0' => 'No',
+                        '1' => 'On',
+                        '0' => 'Off',
                     ],
                 ],
                 [

@@ -43,6 +43,7 @@ Route::prefix('admin')->group(function () {
         Route::post('profile/{user}/update-profile',[UserController::class,'updateProfile'])->name('profile.update');
         Route::post('profile/{user}/change-password',[UserController::class,'updatePassword'])->name('profile.updatePassword');
         Route::get('settings',[SettingController::class,'index'])->name('settings');
+        Route::post('settings',[SettingController::class,'store']);
     
         Route::resource('roles', RoleController::class);
         Route::resource('users',UserController::class);

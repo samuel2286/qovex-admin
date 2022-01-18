@@ -4,8 +4,8 @@
 <form class="form-horizontal" method="post" action="{{route('login')}}">
     @csrf
     <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" value="{{old('username')}}" placeholder="Enter username" name="username">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" value="{{old('email')}}" placeholder="Enter email" name="email">
     </div>
 
     <div class="form-group">
@@ -26,7 +26,7 @@
     </div>
 
     <div class="mt-4 text-center">
-        <a href="{{route('forgot-password')}}" class="text-muted"><i
+        <a href="{{route('password.request')}}" class="text-muted"><i
                 class="mdi mdi-lock mr-1"></i> Forgot your password?</a>
     </div>
 </form>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('page-css')
-    
+<link href="{{asset('assets/libs/select2/css/select2.min.css')}}" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('content')
@@ -16,5 +16,7 @@
 @endsection
 
 @push('page-js')
-    
+    <script src="{{asset('assets/libs/select2/js/select2.min.js')}}"></script>
+    <!-- form advanced init -->
+    <script src="{{asset('assets/js/pages/form-advanced.init.js')}}"></script>
 @endpush

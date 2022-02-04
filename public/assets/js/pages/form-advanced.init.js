@@ -2,8 +2,7 @@
     "use strict";
     function a() {}
     (a.prototype.init = function () {
-        i(".select2").select2(),
-            i(".select2-limiting").select2({ maximumSelectionLength: 2 }),
+            i(".select2").select2(),
             i(".colorpicker-default").colorpicker({ format: "hex" }),
             i(".colorpicker-rgba").colorpicker(),
             i("#colorpicker-horizontal").colorpicker({

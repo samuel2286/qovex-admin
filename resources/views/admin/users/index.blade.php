@@ -22,6 +22,7 @@
                             <th>Name</th>
                             <th>Username</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Avatar</th>
                             <th>Action</th>
                         </tr>
@@ -48,6 +49,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'username', name: 'username'},
                     {data: 'email', name: 'email'},
+                    {data: 'role', name: 'role'},
                     {data: 'avatar', name: 'avatar', orderable: false, searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]

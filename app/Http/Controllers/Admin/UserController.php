@@ -33,6 +33,10 @@ class UserController extends Controller
                         }
                         return '<img src="'.$src.'" class="rounded-circle avatar-md" />';
                     })
+                    ->addColumn('role',function($row){
+                        $roles = $row->roles->pluck('name')->toArray();
+                        return implode(',',$roles);
+                    })
                     ->addColumn('action',function ($user){
                         $editbtn = '<a href="'.route('users.edit',$user->id).'" class="edit"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
                         $deletebtn = '<a data-id="'.$user->id.'" data-route="'.route('users.destroy',$user->id).'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
@@ -115,6 +119,7 @@ class UserController extends Controller
             'url' => route('users.update',$user),
             'model' => $user,
         ]);
+        $form->getField('role')->setOption('selected',$user->roles->pluck('id')->first());
         return view('admin.users.edit',compact(
             'title','form'
         ));

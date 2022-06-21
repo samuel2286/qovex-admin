@@ -40,11 +40,11 @@ class UserForm extends Form
                 ]
             ])
             ->add('role', 'select',[
+                'attr' => [
+                    'class' => 'form-control select2'
+                ],
                 'choices' => Role::all()->pluck('name')->toArray(),
                 'empty_value' => '=== Select Role ===',
-                'selected' => function($role){
-                    return Role::all()->pluck('name',$role);
-                }
             ])
             ->add('password', 'password',[
                 'rules' => 'required|min:3|max:255|confirmed',

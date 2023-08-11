@@ -9,7 +9,14 @@
                 <span>Dashboard</span>
             </a>
         </li>
-
+        @can('view-TestOffers')
+        <li>
+            <a href="{{route('test-offer')}}" class=" waves-effect">
+                <i class="mdi mdi-airplay"></i>
+                <span>Test Offers</span>
+            </a>
+        </li>
+        @endcan
         @can('view-authentication')
         <li class="menu-title">Authentication</li>
         <li>

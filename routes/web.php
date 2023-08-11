@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\TestOffersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('permissions', [PermissionController::class,'store']);
     Route::put('permissions', [PermissionController::class,'update']);
     Route::delete('permission', [PermissionController::class,'destroy'])->name('permission.destroy');
+
+    Route::get('test-offers', [TestOffersController::class,'index'])->name('test-offer');
+    Route::post('test-offers', [TestOffersController::class,'store']);
+    Route::put('test-offers', [TestOffersController::class,'update']);
+    Route::delete('test-offers', [TestOffersController::class,'destroy'])->name('test-offer.destroy');
 
     Route::get('profile', [UserController::class,'profile'])->name('profile');
     Route::post('profile/{user}/update-profile', [UserController::class,'updateProfile'])->name('profile.update');

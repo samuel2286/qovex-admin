@@ -84,8 +84,7 @@ class UserController extends Controller
     public function store(Request $request,FormBuilder $formBuilder)
     {
         $form = $formBuilder->create(UserForm::class);
-        $form->redirectIfNotValid();   
-
+        $form->redirectIfNotValid();
         $imageName = null;
         if($request->hasFile('avatar')){
             $imageName = time().'.'.$request->avatar->extension();
@@ -95,6 +94,7 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'phone' => $request->phone,
             'avatar' => $imageName,
             'password' => Hash::make($request->password),
         ]);
@@ -103,7 +103,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with($notifiation);
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -120,6 +120,7 @@ class UserController extends Controller
             'model' => $user,
         ]);
         $form->getField('role')->setOption('selected',$user->roles->pluck('id')->first());
+        $form->getField('password')->setValue('');
         return view('admin.users.edit',compact(
             'title','form'
         ));
@@ -136,8 +137,13 @@ class UserController extends Controller
     public function update(Request $request, User $user,FormBuilder $formBuilder)
     {
         $form = $formBuilder->create(UserForm::class);
+        $form->getRules(['password' => ['nullable|confirmed']]);
         $form->redirectIfNotValid();
-
+        if(!empty($request->password)){
+            $form->getRules([
+                'password' => 'required|min:3|max:255|confirmed'
+            ]);
+        }
         $imageName = $user->avatar;
         $password = $user->password;
         if($request->hasFile('avatar')){
@@ -151,17 +157,20 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'phone' => $request->phone,
             'avatar' => $imageName,
             'password' => $password,
         ]);
         foreach($user->getRoleNames() as $userRole){
             $user->removeRole($userRole);
         }
-        $user->assignRole($request->role);
+        if(!empty($request->role)){
+            $user->assignRole($request->role);
+        }
         $notification = notify('user updated successfully');
         return redirect()->route('users.index')->with($notification);
     }
-    
+
     public function profile(){
         $title = 'user profile';
         return view('admin.users.profile',compact(
@@ -185,6 +194,7 @@ class UserController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'phone' => $request->phone,
             'avatar' => $imageName,
         ]);
         $notification = notify('profile updated successfully');
@@ -225,6 +235,6 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
        return User::findOrFail($request->id)->delete();
-         
+
     }
 }

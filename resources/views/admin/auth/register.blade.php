@@ -13,6 +13,10 @@
     </div>
 
     <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" class="form-control" id="phone" name="phone" value="{{old('phone')}}"  placeholder="Enter phone">
+    </div>
+    <div class="form-group">
         <label for="username">Username</label>
         <input type="text" class="form-control" id="username" name="username" value="{{old('username')}}"  placeholder="Enter username">
     </div>

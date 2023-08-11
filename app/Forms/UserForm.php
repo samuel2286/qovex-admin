@@ -20,7 +20,6 @@ class UserForm extends Form
                     'placeholder' => "Enter user Fullname"
                 ]
             ])
-                        
             ->add('username', 'text',[
                 'rules' => 'required|min:3|max:200',
                 'error_messages' => [
@@ -28,6 +27,15 @@ class UserForm extends Form
                 ],
                 'attr' =>[
                     'placeholder' => "Enter username"
+                ]
+            ])
+            ->add('phone', 'text',[
+                'rules' => 'required|min:3|max:200',
+                'error_messages' => [
+                    'phone.required' => 'The phone field is mandatory.'
+                ],
+                'attr' =>[
+                    'placeholder' => "Enter phone"
                 ]
             ])
             ->add('email', 'email',[
@@ -43,11 +51,10 @@ class UserForm extends Form
                 'attr' => [
                     'class' => 'form-control select2'
                 ],
-                'choices' => Role::all()->pluck('name')->toArray(),
+                'choices' => Role::all()->pluck('name','id')->toArray(),
                 'empty_value' => '=== Select Role ===',
             ])
             ->add('password', 'password',[
-                'rules' => 'required|min:3|max:255|confirmed',
                 'error_messages' => [
                     'password.required' => 'The password field is mandatory.'
                 ],

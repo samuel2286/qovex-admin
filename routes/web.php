@@ -21,33 +21,27 @@ use App\Http\Controllers\Admin\PermissionController;
 */
 
 
-Route::prefix('admin')->group(function () {
-    Route::middleware(['auth'])->group(function () {
-        Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
-        Route::get('', [DashboardController::class,'index']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('', [DashboardController::class,'index']);
 
-    
-        Route::get('permissions', [PermissionController::class,'index'])->name('permissions');
-        Route::post('permissions', [PermissionController::class,'store']);
-        Route::put('permissions', [PermissionController::class,'update']);
-        Route::delete('permission', [PermissionController::class,'destroy'])->name('permission.destroy');
-    
-        Route::get('profile', [UserController::class,'profile'])->name('profile');
-        Route::post('profile/{user}/update-profile', [UserController::class,'updateProfile'])->name('profile.update');
-        Route::post('profile/{user}/change-password', [UserController::class,'updatePassword'])->name('profile.updatePassword');
-        Route::get('settings', [SettingController::class,'index'])->name('settings');
-        Route::post('settings', [SettingController::class,'store']);
-    
-        Route::resource('roles', RoleController::class);
-        Route::resource('users', UserController::class);
-    
-        Route::get('backup', [BackupController::class,'index'])->name('backup.index');
-        Route::put('backup/create', [BackupController::class,'create'])->name('backup.store');
-        Route::get('backup/download/{file_name?}', [BackupController::class,'download'])->name('backup.download');
-        Route::delete('backup/delete/{file_name?}', [BackupController::class,'destroy'])->where('file_name', '(.*)')->name('backup.destroy');
-    });
-});
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::get('permissions', [PermissionController::class,'index'])->name('permissions');
+    Route::post('permissions', [PermissionController::class,'store']);
+    Route::put('permissions', [PermissionController::class,'update']);
+    Route::delete('permission', [PermissionController::class,'destroy'])->name('permission.destroy');
+
+    Route::get('profile', [UserController::class,'profile'])->name('profile');
+    Route::post('profile/{user}/update-profile', [UserController::class,'updateProfile'])->name('profile.update');
+    Route::post('profile/{user}/change-password', [UserController::class,'updatePassword'])->name('profile.updatePassword');
+    Route::get('settings', [SettingController::class,'index'])->name('settings');
+    Route::post('settings', [SettingController::class,'store']);
+
+    Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
+
+    Route::get('backup', [BackupController::class,'index'])->name('backup.index');
+    Route::put('backup/create', [BackupController::class,'create'])->name('backup.store');
+    Route::get('backup/download/{file_name?}', [BackupController::class,'download'])->name('backup.download');
+    Route::delete('backup/delete/{file_name?}', [BackupController::class,'destroy'])->where('file_name', '(.*)')->name('backup.destroy');
 });

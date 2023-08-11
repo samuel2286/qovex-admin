@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @push('page-css')
-    
+
 @endpush
 
 @section('content')
@@ -57,12 +57,12 @@
     </div>
 </div>
 
-<div class="col-md-12 col-xl-9">  
+<div class="col-md-12 col-xl-9">
     <div class="card">
         <div class="card-body">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
-                
+
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">
                         <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
@@ -89,7 +89,7 @@
                                 </div>
                             </div>
                         </div>
-    
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -109,8 +109,10 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="lockscreen">LockScreen Time</label>
-                                    <input type="number" class="form-control" name="lockscreen" value="{{auth()->user()->lockout_time}}" id="email">
+                                    <div class="form-group">
+                                        <label for="phone">Phone</label>
+                                        <input type="text" class="form-control" id="phone" name="phone" value="{{auth()->user()->phone ?? old('phone')}}"  placeholder="Enter phone">
+                                    </div>
                                 </div>
                             </div> <!-- end col -->
                         </div>
@@ -173,9 +175,9 @@
         </div>
     </div>
 
-</div>   
+</div>
 @endsection
 
 @push('page-js')
-   
+
 @endpush

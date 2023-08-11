@@ -9,10 +9,9 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        
 
-        <li class="menu-title">Authentication</li>
         @can('view-authentication')
+        <li class="menu-title">Authentication</li>
         <li>
             <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="mdi mdi-lock"></i>
@@ -43,6 +42,7 @@
             </a>
         </li>
         @endcan
+        @can('view-settings')
         <li>
             <a href="javascript: void(0);" class="has-arrow waves-effect">
                 <i class="mdi mdi-settings-outline"></i>
@@ -53,6 +53,7 @@
                 <li><a href="{{route('settings')}}">General Setting</a></li>
                @endcan
             </ul>
-        
+        </li>
+        @endcan
     </ul>
 </div>

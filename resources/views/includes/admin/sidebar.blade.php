@@ -25,6 +25,14 @@
             </a>
         </li>
         @endcan
+        @can('view-TestResults')
+        <li>
+            <a href="{{route('test-results')}}" class=" waves-effect">
+                <i class="mdi mdi-airplay"></i>
+                <span>Test Results</span>
+            </a>
+        </li>
+        @endcan
         @can('view-appointments')
         <li>
             <a href="{{route('appointments')}}" class=" waves-effect">

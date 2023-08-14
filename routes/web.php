@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FilemanagerController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TestOffersController;
+use App\Http\Controllers\Admin\TestResultsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('appointments', [AppointmentsController::class,'destroy'])->name('appointments.destroy');
     Route::post('appointment/update-status', [AppointmentsController::class, 'updateStatus'])->name('appointment.update-stat');
     Route::get('my-appointments', [AppointmentsController::class, 'userAppointment'])->name('user.appointments');
+
+    Route::get('test-results', [TestResultsController::class, 'index'])->name('test-results');
+    Route::post('test-results', [TestResultsController::class, 'store']);
+    Route::put('test-results', [TestResultsController::class, 'update']);
+    Route::delete('test-results', [TestResultsController::class, 'destroy'])->name('test-results.destroy');
 
     Route::get('profile', [UserController::class,'profile'])->name('profile');
     Route::post('profile/{user}/update-profile', [UserController::class,'updateProfile'])->name('profile.update');

@@ -43,12 +43,11 @@ class AppointmentsController extends Controller
                 })
                 ->addColumn('action',function ($row){
                     $editbtn = '<a data-id="'.($row->id).'" data-patient="'.($row->user_id).'" data-gender="'.($row->gender).'" data-address="'.($row->address).'" data-date="'.($row->appointment_date).'" data-tests="'.json_parse($row->test_offers).'" href="javascript:void(0)" class="edit"><button class="btn btn-primary"><i class="fas fa-edit"></i></button></a>';
-                    $approve = '<a data-id="'.$row->id.'" href="javascript:void(0)" class="update_status"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
                     $deletebtn = '<a data-id="'.$row->id.'" data-route="'.route('appointments.destroy').'" href="javascript:void(0)" id="deletebtn"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>';
-                    if(!auth()->user()->hasPermissionTo('edit-TestOffer')){
+                    if(!auth()->user()->hasPermissionTo('edit-appointment')){
                         $editbtn = '';
                     }
-                    if(!auth()->user()->hasPermissionTo('destroy-TestOffer')){
+                    if(!auth()->user()->hasPermissionTo('destroy-appointment')){
                         $deletebtn = '';
                     }
                     $btn = $editbtn.' '.$deletebtn;

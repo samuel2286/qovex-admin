@@ -21,7 +21,6 @@ class RolePermissionSeeder extends Seeder
             'view-TestResults','create-TestResult','edit-TestResult','destroy-TestResult',
             'view-appointments','create-appointment','edit-appointment','destroy-appointment',
             'view-TestOffers','create-TestOffer','edit-TestOffer','destroy-TestOffer',
-            'view-backups','create-backup','download-backup','destroy-backup',
             'view-authentication','view-settings',
             'view-users','create-user','edit-user','destroy-user',
             'view-roles','create-role','edit-role','destroy-role',

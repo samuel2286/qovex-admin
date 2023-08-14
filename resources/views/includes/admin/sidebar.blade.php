@@ -16,11 +16,17 @@
                 <span>My Appointments</span>
             </a>
         </li>
+        <li>
+            <a href="{{route('my-test-results')}}" class=" waves-effect">
+                <i class="mdi mdi-flask-round-bottom"></i>
+                <span>My Test Results</span>
+            </a>
+        </li>
         @endrole
         @can('view-TestOffers')
         <li>
             <a href="{{route('test-offer')}}" class=" waves-effect">
-                <i class="mdi mdi-airplay"></i>
+                <i class="mdi mdi-bottle-tonic-plus"></i>
                 <span>Test Offers</span>
             </a>
         </li>
@@ -28,7 +34,7 @@
         @can('view-TestResults')
         <li>
             <a href="{{route('test-results')}}" class=" waves-effect">
-                <i class="mdi mdi-airplay"></i>
+                <i class="mdi mdi-flask-round-bottom"></i>
                 <span>Test Results</span>
             </a>
         </li>
@@ -65,14 +71,7 @@
             </ul>
         </li>
         @endcan
-        @can('view-backups')
-        <li>
-            <a href="{{route('backup.index')}}" class=" waves-effect">
-                <i class="fas fa-download"></i>
-                <span>Backup</span>
-            </a>
-        </li>
-        @endcan
+        
         @can('view-settings')
         <li>
             <a href="javascript: void(0);" class="has-arrow waves-effect">

@@ -51,6 +51,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('test-results', [TestResultsController::class, 'store']);
     Route::put('test-results', [TestResultsController::class, 'update']);
     Route::delete('test-results', [TestResultsController::class, 'destroy'])->name('test-results.destroy');
+    Route::get('my-test-results', [TestResultsController::class, 'userTestResults'])->name('my-test-results');
+    Route::post('send-sms', [TestResultsController::class, 'sendNotification'])->name('sendSMS');
 
     Route::get('profile', [UserController::class,'profile'])->name('profile');
     Route::post('profile/{user}/update-profile', [UserController::class,'updateProfile'])->name('profile.update');

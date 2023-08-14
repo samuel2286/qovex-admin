@@ -40,16 +40,13 @@ if(!function_exists('alert')){
     }
 }
 
-function sendSMS($phone, $message)
+function sendSMS($sender, $phone, $message)
 	{
-
-		$sender = "";
-
-		// SEND SMS
+        $api_key = env('SMS_API_KEY');
 		$curl = curl_init();
 		curl_setopt_array($curl, [
 			CURLOPT_URL => 'https://sms.arkesel.com/api/v2/sms/send',
-			CURLOPT_HTTPHEADER => ["api-key: OlUzeHhQQTd4bjhZMXQwMWI="],
+			CURLOPT_HTTPHEADER => ["api-key: {$api_key}"],
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,

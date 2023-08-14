@@ -24,4 +24,8 @@ class Appointment extends Model
     public function approvedBy(){
         return $this->belongsTo(User::class, 'approved_by');
     }
+
+    public function testResults(){
+        return $this->hasMany(TestResult::class);
+    }
 }

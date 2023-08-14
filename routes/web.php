@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\BackupController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FilemanagerController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TestOffersController;
 
@@ -53,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+
+    Route::get('filemanager', [FilemanagerController::class, 'index'])->name('filemanager');
 
     Route::get('backup', [BackupController::class,'index'])->name('backup.index');
     Route::put('backup/create', [BackupController::class,'create'])->name('backup.store');

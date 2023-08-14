@@ -4,8 +4,8 @@
 <form class="form-horizontal" method="post" action="{{route('login')}}">
     @csrf
     <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" value="{{old('email')}}" placeholder="Enter email" name="email">
+        <label for="email">Email Or Username</label>
+        <input type="text" class="form-control" id="email" value="{{old('email')}}" placeholder="Enter email" name="email">
     </div>
 
     <div class="form-group">

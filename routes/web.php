@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AppointmentsController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\RoleController;
@@ -36,6 +37,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('test-offers', [TestOffersController::class,'store']);
     Route::put('test-offers', [TestOffersController::class,'update']);
     Route::delete('test-offers', [TestOffersController::class,'destroy'])->name('test-offer.destroy');
+
+    Route::get('appointments', [AppointmentsController::class,'index'])->name('appointments');
+    Route::post('appointments', [AppointmentsController::class,'store']);
+    Route::put('appointments', [AppointmentsController::class,'update']);
+    Route::delete('appointments', [AppointmentsController::class,'destroy'])->name('appointments.destroy');
+    Route::post('appointment/update-status', [AppointmentsController::class, 'updateStatus'])->name('appointment.update-stat');
+    Route::get('my-appointments', [AppointmentsController::class, 'userAppointment'])->name('user.appointments');
 
     Route::get('profile', [UserController::class,'profile'])->name('profile');
     Route::post('profile/{user}/update-profile', [UserController::class,'updateProfile'])->name('profile.update');

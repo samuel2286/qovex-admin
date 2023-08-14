@@ -9,11 +9,27 @@
                 <span>Dashboard</span>
             </a>
         </li>
+        @role('patient')
+        <li>
+            <a href="{{route('user.appointments')}}" class=" waves-effect">
+                <i class="mdi mdi-book"></i>
+                <span>My Appointments</span>
+            </a>
+        </li>
+        @endrole
         @can('view-TestOffers')
         <li>
             <a href="{{route('test-offer')}}" class=" waves-effect">
                 <i class="mdi mdi-airplay"></i>
                 <span>Test Offers</span>
+            </a>
+        </li>
+        @endcan
+        @can('view-appointments')
+        <li>
+            <a href="{{route('appointments')}}" class=" waves-effect">
+                <i class="mdi mdi-book"></i>
+                <span>Appointments</span>
             </a>
         </li>
         @endcan

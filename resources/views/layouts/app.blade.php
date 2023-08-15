@@ -133,10 +133,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="text-sm-right d-none d-sm-block">
-                                    Design & Develop by Themesbrand
-                                </div>
-                            </div>
-                        </div>
+                                     KNUST Project: 8886821 and 8897121
                     </div>
                 </footer>
             </div>
